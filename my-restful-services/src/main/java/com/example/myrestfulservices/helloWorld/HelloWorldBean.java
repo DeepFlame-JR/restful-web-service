@@ -1,4 +1,4 @@
-package com.example.myrestfulservices;
+package com.example.myrestfulservices.helloWorld;
 
 // lombok 
 import lombok.Data;
