@@ -31,4 +31,10 @@ public class CustomizedResponseExtityExceptionHandler extends ResponseEntityExce
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
+
+    @Override
+    protected org.springframework.http.ResponseEntity<java.lang.Object> handleMethodArgumentNotValid(org.springframework.web.bind.MethodArgumentNotValidException ex, org.springframework.http.HttpHeaders headers, org.springframework.http.HttpStatus status, org.springframework.web.context.request.WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), "Validation Failed", ex.getBindingResult().toString());
+        return new ResponseEntity<Object>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
 }
