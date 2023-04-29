@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -15,6 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
+
 
     @Bean
     public UserDetailsService userDetailsService(){
@@ -28,11 +29,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.authorizeRequests()
-               .anyRequest()
-               .authenticated()
-               .and()
-               .httpBasic();
+        http.authorizeRequests()  // 요청에 의한 보안검사 시작
+            .antMatchers("/h2-console/**").permitAll()  // 일부 url에 대해서 허용
+            .anyRequest()
+            .authenticated() 
+            .and()
+            .httpBasic();
+        
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+
         return http.build();
     }
 
