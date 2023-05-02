@@ -8,12 +8,16 @@ import java.util.Date;
 
 import lombok.AllArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -28,17 +32,19 @@ public class User {
     // DB에 테이블로 추가됨
     // Hibernate: create table user (id integer not null, join_date timestamp, name varchar(255), password varchar(255), ssn varchar(255), primary key (id))
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Schema(description = "이름을 입력해주세요.")
-    @Size(min = 2, message= "Name은 2글자 이상 입력해 주세요.")
+    // @Schema(description = "이름을 입력해주세요.")
+    // @Size(min = 2, message= "Name은 2글자 이상 입력해 주세요.")
+    // @NotNull
     private String name;
 
     @Past
     @NotNull
-    private Date joinDate;
+    private Date joindate;
 
     private String password;
     private String ssn;
+
 }
